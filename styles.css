@@ -394,3 +394,21 @@ body {
 }
 .comment-text { line-height: 1.6; }
   
+/* ============== KOTAK IKLAN ============== */
+.ad-box {
+  margin: 24px 0;
+  padding: 12px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  text-align: center;
+  border: 1px solid #334155;
+}
+.ad-box::before {
+  content: "Iklan";
+  font-size: 11px;
+  color: var(--muted);
+  display: block;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
