@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SUCA — Platform Novel</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="styles.css">
     <!-- Supabase JS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
     <!-- Ikon -->
@@ -279,64 +279,267 @@
     <a href="history.html" class="nav-link">📖 Riwayat</a>
     <a href="events.html" class="nav-link">🎉 Event</a>
     <a href="about.html" class="nav-link">ℹ️ Tentang</a>
-  </nav>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUCA — Platform Novel</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+    <!-- Ikon -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+</head>
+<body>
+    <!-- ============================================== -->
+    <!-- LAYAR SYARAT & KETENTUAN — HANYA PERTAMA KALI -->
+    <!-- ============================================== -->
+    <div id="termsOverlay" class="terms-overlay">
+        <div class="terms-box">
+            <h2>📜 Syarat & Ketentuan SUCA</h2>
+            <div class="terms-content">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="check1">
+                    <span>Menyetujui membayar denda wajib 30 juta + seluruh pendapatan dari karya yang dicuri + 20% total pendapatan dari karya yang dicuri dari platform ini.</span>
+                </label>
+                <label class="checkbox-label">
+                    <input type="checkbox" id="check2">
+                    <span>Menyetujui semua aturan di atas dan aturan lain dari platform ini, serta menaati UU Perlindungan Hak Cipta.</span>
+                </label>
+            </div>
+            <button id="agreeBtn" class="agree-btn" disabled>Setuju & Masuk</button>
+        </div>
+    </div>
 
-  <!-- Konten Utama -->
-  <main class="container" id="main-content" style="display:none;">
-    <!-- Rekomendasi -->
-    <section class="section">
-      <h2>✨ Rekomendasi Untukmu</h2>
-      <div class="novel-row" id="recommendation-row"></div>
-    </section>
+    <!-- ============================================== -->
+    <!-- NAVIGASI ATAS -->
+    <!-- ============================================== -->
+    <header class="header" id="mainHeader" style="display:none;">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>SUCA</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Cari novel, penulis, genre...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="nav-actions">
+                <button class="icon-btn" id="notifBtn">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge" id="notifBadge">0</span>
+                </button>
+                <button class="icon-btn" id="profileBtn"><i class="fas fa-user"></i></button>
+            </div>
+        </div>
+    </header>
 
-    <!-- Top Novel -->
-    <section class="section">
-      <h2>🔥 Novel Paling Ramai</h2>
-      <div class="novel-row" id="top-novels"></div>
-    </section>
+    <!-- ============================================== -->
+    <!-- NAVIGASI BAWAH (Menu Utama) -->
+    <!-- ============================================== -->
+    <nav class="bottom-nav" id="mainNav" style="display:none;">
+        <button class="nav-item active" data-page="home">
+            <i class="fas fa-home"></i> Beranda
+        </button>
+        <button class="nav-item" data-page="novels">
+            <i class="fas fa-book"></i> Novel
+        </button>
+        <button class="nav-item" data-page="history">
+            <i class="fas fa-history"></i> Riwayat
+        </button>
+        <button class="nav-item" data-page="events">
+            <i class="fas fa-calendar-star"></i> Event
+        </button>
+        <button class="nav-item" data-page="about">
+            <i class="fas fa-info-circle"></i> Tentang
+        </button>
+    </nav>
 
-    <!-- Genre Favorit -->
-    <section class="section">
-      <h2>📖 Sesuai Minatmu</h2>
-      <div class="novel-row" id="genre-recs"></div>
-    </section>
+    <!-- ============================================== -->
+    <!-- KONTEN UTAMA -->
+    <!-- ============================================== -->
+    <main class="main-content" id="mainContent" style="display:none;">
 
-    <!-- Terbaru -->
-    <section class="section">
-      <h2>🆕 Novel Terbaru</h2>
-      <div class="novel-row" id="latest-novels"></div>
-    </section>
+        <!-- === HALAMAN 1: BERANDA === -->
+        <section class="page active" id="page-home">
+            <!-- Rekomendasi -->
+            <div class="section">
+                <h2 class="section-title">✨ Rekomendasi Untukmu</h2>
+                <div class="novel-grid" id="recommendationGrid"></div>
+            </div>
 
-    <!-- Sudah Tamat -->
-    <section class="section">
-      <h2>✅ Sudah Tamat</h2>
-      <div class="sort-controls">
-        <select onchange="loadCompletedNovels(this.value)">
-          <option value="views">Terpopuler</option>
-          <option value="stars">Terbaik</option>
-          <option value="updated">Terbaru</option>
-        </select>
-      </div>
-      <div class="novel-row" id="completed-novels"></div>
-    </section>
-  </main>
+            <!-- Paling Ramai -->
+            <div class="section">
+                <h2 class="section-title">🔥 Paling Ramai Dibaca</h2>
+                <div class="novel-grid" id="trendingGrid"></div>
+            </div>
 
-  <!-- Scripts -->
-  <script type="module">
-    import './app.js';
-    import { loadAllRecommendations } from './recommendation.js';
-    import './search.js';
+            <!-- Terbaru -->
+            <div class="section">
+                <h2 class="section-title">🆕 Karya Terbaru</h2>
+                <div class="novel-grid" id="newestGrid"></div>
+            </div>
 
-    window.loadMainContent = async () => {
-      document.getElementById('main-content').style.display = 'block';
-      await loadAllRecommendations();
-    };
+            <!-- Sudah Tamat -->
+            <div class="section">
+                <div class="section-header">
+                    <h2 class="section-title">✅ Sudah Tamat</h2>
+                    <select id="completedSort" class="sort-select">
+                        <option value="views">Terbanyak Dilihat</option>
+                        <option value="likes">Terbanyak Disukai</option>
+                        <option value="newest">Terbaru</option>
+                    </select>
+                </div>
+                <div class="novel-grid" id="completedGrid"></div>
+            </div>
+        </section>
 
-    window.openNovel = (id) => {
-      location.href = `novel-read.html?id=${id}`;
-    };
-  </script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+        <!-- === HALAMAN 2: DAFTAR NOVEL === -->
+        <section class="page" id="page-novels">
+            <div class="page-header">
+                <h2>Semua Novel</h2>
+                <div class="filter-bar">
+                    <select id="genreFilter" class="filter-select">
+                        <option value="all">Semua Genre</option>
+                        <option value="Romansa">Romansa</option>
+                        <option value="Fantasi">Fantasi</option>
+                        <option value="Horor">Horor</option>
+                        <option value="Misteri">Misteri</option>
+                        <option value="Aksi">Aksi</option>
+                        <option value="Komedi">Komedi</option>
+                    </select>
+                    <select id="sortFilter" class="filter-select">
+                        <option value="newest">Terbaru</option>
+                        <option value="oldest">Terlama</option>
+                        <option value="completed">Sudah Tamat</option>
+                        <option value="views">Terbanyak Pembaca</option>
+                    </select>
+                </div>
+            </div>
+            <div class="novel-grid" id="allNovelGrid"></div>
+        </section>
+
+        <!-- === HALAMAN 3: RIWAYAT BACAAN === -->
+        <section class="page" id="page-history">
+            <h2>Riwayat Bacaan</h2>
+            <div id="historyList"></div>
+            <div class="suggestion-box">
+                <h3>💡 Saran Pembaca</h3>
+                <p>Kirim saran minimal 2 kali setiap bulan untuk membantu SUCA menjadi lebih baik!</p>
+                <textarea id="suggestionInput" placeholder="Tulis saranmu di sini..." rows="4"></textarea>
+                <button id="submitSuggestion" class="primary-btn">Kirim Saran</button>
+            </div>
+        </section>
+
+        <!-- === HALAMAN 4: EVENT & KUIS === -->
+        <section class="page" id="page-events">
+            <h2>📢 Event & Pengumuman</h2>
+            <div id="eventsList"></div>
+            <div id="quizContainer" style="display:none;">
+                <div class="quiz-header">
+                    <h3 id="quizTitle"></h3>
+                    <div class="timer-box">Waktu: <span id="quizTimer">0</span> detik</div>
+                </div>
+                <div id="quizQuestion"></div>
+                <div id="quizOptions"></div>
+                <button id="nextQuestion" class="primary-btn" style="display:none;">Soal Berikutnya</button>
+            </div>
+        </section>
+
+        <!-- === HALAMAN 5: TENTANG SUCA === -->
+        <section class="page" id="page-about">
+            <div class="about-section">
+                <h1 class="logo-large">SUCA</h1>
+                <p class="about-desc">SUCA adalah platform novel yang menyajikan karya-karya terbaik dari berbagai penulis. Semua konten dilindungi hak cipta.</p>
+                
+                <!-- Link Admin Upload — disembunyikan tapi bisa diakses -->
+                <button id="adminUploadLink" class="hidden-btn" title="Admin Only">🔧</button>
+                
+                <div class="version-info">
+                    <strong>Versi Website:</strong> v1.0.0
+                </div>
+                
+                <div class="about-links">
+                    <button class="about-link-btn" data-modal="privacy">Kebijakan Privasi</button>
+                    <button class="about-link-btn" data-modal="terms-page">Ketentuan Layanan</button>
+                    <button class="about-link-btn" data-modal="license">Lisensi Terbuka</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- === HALAMAN BACA NOVEL === -->
+        <section class="page" id="page-reader">
+            <button class="back-btn" id="backFromReader"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <div class="reader-container">
+                <h2 id="readerNovelTitle"></h2>
+                <h3 id="readerChapterTitle"></h3>
+                <div class="chapter-nav">
+                    <button id="prevChapter" class="chapter-btn">← Bab Sebelumnya</button>
+                    <span id="chapterNumber"></span>
+                    <button id="nextChapter" class="chapter-btn">Bab Berikutnya →</button>
+                </div>
+                <div id="readerContent" class="reader-text"></div>
+            </div>
+        </section>
+
+        <!-- === HALAMAN UPLOAD ADMIN === -->
+        <section class="page" id="page-admin">
+            <button class="back-btn" id="backFromAdmin"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <h2>🔧 Panel Upload Admin</h2>
+            <div class="admin-tabs">
+                <button class="admin-tab active" data-tab="novel">Upload Novel Baru</button>
+                <button class="admin-tab" data-tab="chapter">Upload Bab Baru</button>
+            </div>
+
+            <!-- Upload Novel -->
+            <form id="uploadNovelForm" class="admin-form">
+                <h3>Data Novel</h3>
+                <input type="text" id="novelTitle" placeholder="Judul Novel" required>
+                <input type="text" id="novelAuthor" placeholder="Nama Penulis" required>
+                <input type="text" id="novelGenre" placeholder="Genre (pisahkan dengan koma)" required>
+                <textarea id="novelDesc" placeholder="Sinopsis / Deskripsi" required></textarea>
+                <input type="url" id="novelCover" placeholder="Link URL Gambar Sampul">
+                <button type="submit" class="primary-btn">Simpan Novel ke Database</button>
+            </form>
+
+            <!-- Upload Bab -->
+            <form id="uploadChapterForm" class="admin-form" style="display:none;">
+                <h3>Upload Bab Baru</h3>
+                <select id="selectNovel" required>
+                    <option value="">-- Pilih Novel --</option>
+                </select>
+                <input type="number" id="chapterNum" placeholder="Nomor Bab" required>
+                <input type="text" id="chapterTitle" placeholder="Judul Bab" required>
+                <textarea id="chapterContent" placeholder="Isi cerita..." required></textarea>
+                <button type="submit" class="primary-btn">Simpan Bab ke Database</button>
+            </form>
+        </section>
+
+        <!-- === HASIL PENCARIAN === -->
+        <section class="page" id="page-search">
+            <button class="back-btn" id="backFromSearch"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <h2>Hasil Pencarian: <span id="searchQuery"></span></h2>
+            <div class="novel-grid" id="searchResults"></div>
+        </section>
+
+        <!-- === NOTIFIKASI === -->
+        <section class="page" id="page-notifications">
+            <button class="back-btn" id="backFromNotif"><i class="fas fa-arrow-left"></i> Kembali</button>
+            <h2>Notifikasi</h2>
+            <div id="notificationsList"></div>
+        </section>
+
+    </main>
+
+    <!-- MODAL UNTUK KEBIAJAKAN / KETENTUAN -->
+    <div class="modal" id="contentModal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
 </body>
-  </html>
-  
+</html>
