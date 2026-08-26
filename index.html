@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUCA — Baca Novel Terbaik</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Modal Syarat & Denda (WAJIB DICEKLIK DULU) -->
+  <div id="agreement-modal" class="modal active">
+    <div class="modal-box">
+      <h2>📜 Syarat & Ketentuan Penggunaan</h2>
+      <div class="checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" id="agree-fine">
+          <span>Menyetujui membayar denda wajib <strong>30 juta</strong> + seluruh pendapatan dari karya yang dicuri + 20% total pendapatan dari karya yang dicuri dari platform ini.</span>
+        </label>
+        <label class="checkbox-label">
+          <input type="checkbox" id="agree-terms">
+          <span>Menyetujui semua aturan di atas dan aturan lain dari platform ini, serta menaati UU Perlindungan Hak Cipta.</span>
+        </label>
+      </div>
+      <button id="submit-agreement" disabled class="submit-btn">Setuju & Masuk</button>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <h1 class="logo" onclick="location.href='index.html'">📖 SUCA</h1>
+    </div>
+    <div class="header-center">
+      <input type="text" id="search-input" placeholder="Cari novel..." class="search-bar">
+      <div id="search-results" class="search-dropdown"></div>
+    </div>
+    <div class="header-right">
+      <button class="icon-btn" onclick="location.href='events.html'">
+        🔔 <span class="notif-badge"></span>
+      </button>
+      <button class="icon-btn" onclick="location.href='about.html'">👤</button>
+    </div>
+  </header>
+
+  <!-- Navigasi Bawah (Fixed di HP) -->
+  <nav class="bottom-nav">
+    <a href="index.html" class="nav-link active">🏠 Beranda</a>
+    <a href="novels.html" class="nav-link">📚 Novel</a>
+    <a href="history.html" class="nav-link">📖 Riwayat</a>
+    <a href="events.html" class="nav-link">🎉 Event</a>
+    <a href="about.html" class="nav-link">ℹ️ Tentang</a>
+  </nav>
+
+  <!-- Konten Utama -->
+  <main class="container" id="main-content" style="display:none;">
+    <!-- Rekomendasi -->
+    <section class="section">
+      <h2>✨ Rekomendasi Untukmu</h2>
+      <div class="novel-row" id="recommendation-row"></div>
+    </section>
+
+    <!-- Top Novel -->
+    <section class="section">
+      <h2>🔥 Novel Paling Ramai</h2>
+      <div class="novel-row" id="top-novels"></div>
+    </section>
+
+    <!-- Genre Favorit -->
+    <section class="section">
+      <h2>📖 Sesuai Minatmu</h2>
+      <div class="novel-row" id="genre-recs"></div>
+    </section>
+
+    <!-- Terbaru -->
+    <section class="section">
+      <h2>🆕 Novel Terbaru</h2>
+      <div class="novel-row" id="latest-novels"></div>
+    </section>
+
+    <!-- Sudah Tamat -->
+    <section class="section">
+      <h2>✅ Sudah Tamat</h2>
+      <div class="sort-controls">
+        <select onchange="loadCompletedNovels(this.value)">
+          <option value="views">Terpopuler</option>
+          <option value="stars">Terbaik</option>
+          <option value="updated">Terbaru</option>
+        </select>
+      </div>
+      <div class="novel-row" id="completed-novels"></div>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script type="module">
+    import './app.js';
+    import { loadAllRecommendations } from './recommendation.js';
+    import './search.js';
+
+    window.loadMainContent = async () => {
+      document.getElementById('main-content').style.display = 'block';
+      await loadAllRecommendations();
+    };
+
+    window.openNovel = (id) => {
+      location.href = `novel-read.html?id=${id}`;
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+</body>
+  </html>
+  
