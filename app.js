@@ -20,39 +20,27 @@ const APP_STATE = {
 };
 
 // ============== Persetujuan Syarat & Denda ==============
-async function checkUserAgreement() {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return false;
-  
-  const { data } = await supabase
-    .from('users')
-    .select('agreed_fine, agreed_terms')
-    .eq('id', user.id)
-    .single();
-  
-  if (data) {
-    APP_STATE.agreedFine = data.agreed_fine;
-    APP_STATE.agreedTerms = data.agreed_terms;
-  }
-  return data?.agreed_fine && data?.agreed_terms;
-}
-
-async function saveAgreement(agreeFine, agreeTerms) {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return alert("Silakan masuk terlebih dahulu");
-
-  await supabase.from('users').upsert({
-    id: user.id,
-    agreed_fine: agreeFine,
-    agreed_terms: agreeTerms
-  });
-
-  APP_STATE.agreedFine = agreeFine;
-  APP_STATE.agreedTerms = agreeTerms;
-  hideAgreementModal();
-  loadMainContent();
-  loadNotifications();
-}
+// === SIMPEL BANGET — CEKLIS → KLIK → MASUK ===
+ const cek1 = document.getElementById('cek1');
+ const cek2 = document.getElementById('cek2');
+ const masukBtn = document.getElementById('masukBtn');
+ const overlay = document.getElementById('termsOverlay');
+ // Aktifkan tombol kalau DUA-DUANYA dicentang
+ function cekSemua() {
+   masukBtn.disabled = !(cek1.checked && cek2.checked);
+ }
+ cek1.addEventListener('change', cekSemua);
+ cek2.addEventListener('change', cekSemua);
+ // Klik → langsung sembunyikan syarat, TANPA LOGIN!
+ masukBtn.addEventListener('click', () => {
+   overlay.style.display = 'none';
+   // Simpan di browser supaya besok tidak muncul lagi
+   localStorage.setItem('sucaSudahSetuju', 'YA');
+ });
+ // Kalau sudah pernah setuju → langsung hilangkan
+ if (localStorage.getItem('sucaSudahSetuju') === 'YA') {
+   overlay.style.display = 'none';
+ }
 
 // ============== Notifikasi (Realtime) ==============
 async function loadNotifications() {
