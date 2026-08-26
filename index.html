@@ -8,22 +8,24 @@
 </head>
 <body>
   <!-- Modal Syarat & Denda (WAJIB DICEKLIK DULU) -->
-  <div id="agreement-modal" class="modal active">
-    <div class="modal-box">
-      <h2>📜 Syarat & Ketentuan Penggunaan</h2>
-      <div class="checkbox-group">
-        <label class="checkbox-label">
-          <input type="checkbox" id="agree-fine">
-          <span>Menyetujui membayar denda wajib <strong>30 juta</strong> + seluruh pendapatan dari karya yang dicuri + 20% total pendapatan dari karya yang dicuri dari platform ini.</span>
-        </label>
-        <label class="checkbox-label">
-          <input type="checkbox" id="agree-terms">
-          <span>Menyetujui semua aturan di atas dan aturan lain dari platform ini, serta menaati UU Perlindungan Hak Cipta.</span>
-        </label>
-      </div>
-      <button id="submit-agreement" disabled class="submit-btn">Setuju & Masuk</button>
-    </div>
-  </div>
+  <!-- === SYARAT & KETENTUAN — TANPA LOGIN, LANGSUNG MASUK === -->
+ <div class="terms-overlay" id="termsOverlay">
+   <div class="terms-box">
+     <h2>📜 Syarat & Ketentuan</h2>
+     <div class="terms-content">
+       <label class="checkbox-label">
+         <input type="checkbox" id="cek1">
+         <span>Menyetujui membayar denda wajib 30 juta + seluruh pendapatan dari karya yang dicuri + 20% total pendapatan dari karya yang dicuri dari platform ini.</span>
+       </label>
+       <label class="checkbox-label">
+         <input type="checkbox" id="cek2">
+         <span>Menyetujui semua aturan di atas dan aturan lain dari platform ini, serta menaati UU Perlindungan Hak Cipta.</span>
+       </label>
+     </div>
+     <button id="masukBtn" class="btn-primary" disabled>Setuju & Masuk</button>
+   </div>
+ </div>
+ 
 
   <!-- Header -->
   <header class="header">
